@@ -2,12 +2,16 @@ from tkinter import *
 from tkinter import ttk
 import tkinter as tk
 from  tkinter import tix
-from arq_janela_teste import Arq_path_buscar
+from tkinter import filedialog
+#from arq_janela_teste import Arq_path_buscar
+from Funcoes_arqs import Funcoes_arqs
+from  tkinter import messagebox
+import os
 
 
 root=tix.Tk()
 
-class Textadd(Arq_path_buscar):
+class Textadd(Funcoes_arqs):
     def salvar_arq(self):
        with open(self.caminho,"w",encoding="utf-8") as arquivo:
             arquivo.write(self.bloco_text.get("1.0",END))
@@ -19,10 +23,20 @@ class Textadd(Arq_path_buscar):
         self.btn_salvar_arq.configure(state='disable')
    
     def abrir_txt(self):
-        self.tela2()
- 
+        #self.tela2()
+        file= filedialog.askopenfilename(filetype=((".txt", "*.txt"),),multiple=False)
+        #print(os.path.normpath(file))
+        self.arq_funcao_txt(os.path.normpath(file))
         
-     
+        
+    def criacao_txt(self):
+        #filetype=((".txt", "*.txt"),)
+        file = filedialog.asksaveasfile(mode="w", defaultextension=".txt")
+        path_arq_nome=file.name.replace('/','\\')
+        self.arq_funcao_txt(path_arq_nome)
+        
+        
+      
         
 class Escrevertxt(Textadd):
    def __init__(self):
@@ -32,7 +46,7 @@ class Escrevertxt(Textadd):
         self.labels()
         self.caixa_text()
         self.botao()
-        self.ok=False
+        #self.ok=False
         root.mainloop()
         
    def tela(self):
@@ -60,12 +74,15 @@ class Escrevertxt(Textadd):
        
     
    def botao(self):
-        #abrir/criar
-        self.btn_abrir_criar_arq=Button(self.frames, text="Abrir/Criar",bd=4,bg="ivory",fg="black",font=('verdana',8,'bold'),command=self.abrir_txt)
-        self.btn_abrir_criar_arq.place(relx=0.10,rely=0.5,relwidth=0.17, relheight=0.5)
+        #abrir
+        self.btn_abrir_arq=Button(self.frames, text="Abrir/Criar",bd=4,bg="ivory",fg="black",font=('verdana',8,'bold'),command=self.abrir_txt)
+        self.btn_abrir_arq.place(relx=0.10,rely=0.5,relwidth=0.17, relheight=0.5)
+        #criar
+        self.btn_criar_arq=Button(self.frames, text="Criar",bd=4,bg="ivory",fg="black",font=('verdana',8,'bold'),command=self.criacao_txt)
+        self.btn_criar_arq.place(relx=0.30,rely=0.5,relwidth=0.17, relheight=0.5)
         #salvar
         self.btn_salvar_arq=Button(self.frames, text="Salvar",bd=4,bg="ivory",fg="black",font=('verdana',8,'bold'),command=self.salvar_arq)
-        self.btn_salvar_arq.place(relx=0.42,rely=0.5, relwidth=0.17,relheight=0.5)
+        self.btn_salvar_arq.place(relx=0.55,rely=0.5, relwidth=0.17,relheight=0.5)
         self.btn_salvar_arq.configure(state='disable')
         #fechar
         self.btn_fechar_arq=Button(self.frames, text="Fechar",bd=4,bg="darksalmon",fg="black",font=('verdana',8,'bold'),command=self.fechar_txt)
