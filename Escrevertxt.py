@@ -2,51 +2,14 @@ from tkinter import *
 from tkinter import ttk
 import tkinter as tk
 from  tkinter import tix
-from tkinter import filedialog
-#from arq_janela_teste import Arq_path_buscar
 from Funcoes_arqs import Funcoes_arqs
 from  tkinter import messagebox
 import os
 
 
 root=tix.Tk()
-
-class Textadd(Funcoes_arqs):
-    def salvar_arq(self):
-       with open(self.caminho,"w",encoding="utf-8") as arquivo:
-            arquivo.write(self.bloco_text.get("1.0",END))
-            
-    def limpar_txt(self):
-         self.bloco_text.delete("1.0", END)
-         
-    def fechar_txt(self):
-        self.caminho=''
-        self.lab_cod2.configure(text="")
-        self.bloco_text.delete("1.0", END)
-        self.btn_salvar_arq.configure(state='disable')
-   
-    def abrir_txt(self):
-        try:
-            file= filedialog.askopenfilename(filetype=((".txt", "*.txt"),),multiple=False)
-            #print(os.path.normpath(file))
-            self.arq_funcao_txt(os.path.normpath(file))
-        except:
-            print("nada selecionado!")
         
-        
-    def criacao_txt(self):
-        #filetype=((".txt", "*.txt"),)
-        try:
-            file = filedialog.asksaveasfile(mode="w", defaultextension=".txt")
-            path_arq_nome=file.name.replace('/','\\')
-            self.arq_funcao_txt(path_arq_nome)
-        except:
-            print("nada selecionado!")
-        
-        
-      
-        
-class Escrevertxt(Textadd):
+class Escrevertxt(Funcoes_arqs):
    def __init__(self):
         self.root=root
         self.tela()
