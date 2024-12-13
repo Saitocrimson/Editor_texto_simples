@@ -15,7 +15,10 @@ class Textadd(Funcoes_arqs):
     def salvar_arq(self):
        with open(self.caminho,"w",encoding="utf-8") as arquivo:
             arquivo.write(self.bloco_text.get("1.0",END))
-        
+            
+    def limpar_txt(self):
+         self.bloco_text.delete("1.0", END)
+         
     def fechar_txt(self):
         self.caminho=''
         self.lab_cod2.configure(text="")
@@ -23,17 +26,22 @@ class Textadd(Funcoes_arqs):
         self.btn_salvar_arq.configure(state='disable')
    
     def abrir_txt(self):
-        #self.tela2()
-        file= filedialog.askopenfilename(filetype=((".txt", "*.txt"),),multiple=False)
-        #print(os.path.normpath(file))
-        self.arq_funcao_txt(os.path.normpath(file))
+        try:
+            file= filedialog.askopenfilename(filetype=((".txt", "*.txt"),),multiple=False)
+            #print(os.path.normpath(file))
+            self.arq_funcao_txt(os.path.normpath(file))
+        except:
+            print("nada selecionado!")
         
         
     def criacao_txt(self):
         #filetype=((".txt", "*.txt"),)
-        file = filedialog.asksaveasfile(mode="w", defaultextension=".txt")
-        path_arq_nome=file.name.replace('/','\\')
-        self.arq_funcao_txt(path_arq_nome)
+        try:
+            file = filedialog.asksaveasfile(mode="w", defaultextension=".txt")
+            path_arq_nome=file.name.replace('/','\\')
+            self.arq_funcao_txt(path_arq_nome)
+        except:
+            print("nada selecionado!")
         
         
       
@@ -46,7 +54,6 @@ class Escrevertxt(Textadd):
         self.labels()
         self.caixa_text()
         self.botao()
-        #self.ok=False
         root.mainloop()
         
    def tela(self):
@@ -75,23 +82,25 @@ class Escrevertxt(Textadd):
     
    def botao(self):
         #abrir
-        self.btn_abrir_arq=Button(self.frames, text="Abrir/Criar",bd=4,bg="ivory",fg="black",font=('verdana',8,'bold'),command=self.abrir_txt)
-        self.btn_abrir_arq.place(relx=0.10,rely=0.5,relwidth=0.17, relheight=0.5)
+        self.btn_abrir_arq=Button(self.frames, text="Abrir",bd=4,bg="ivory",fg="black",font=('verdana',8,'bold'),command=self.abrir_txt)
+        self.btn_abrir_arq.place(relx=0.01,rely=0.5,relwidth=0.17, relheight=0.5)
         #criar
         self.btn_criar_arq=Button(self.frames, text="Criar",bd=4,bg="ivory",fg="black",font=('verdana',8,'bold'),command=self.criacao_txt)
-        self.btn_criar_arq.place(relx=0.30,rely=0.5,relwidth=0.17, relheight=0.5)
+        self.btn_criar_arq.place(relx=0.2,rely=0.5,relwidth=0.17, relheight=0.5)
         #salvar
         self.btn_salvar_arq=Button(self.frames, text="Salvar",bd=4,bg="ivory",fg="black",font=('verdana',8,'bold'),command=self.salvar_arq)
-        self.btn_salvar_arq.place(relx=0.55,rely=0.5, relwidth=0.17,relheight=0.5)
+        self.btn_salvar_arq.place(relx=0.4,rely=0.5, relwidth=0.17,relheight=0.5)
         self.btn_salvar_arq.configure(state='disable')
         #fechar
         self.btn_fechar_arq=Button(self.frames, text="Fechar",bd=4,bg="darksalmon",fg="black",font=('verdana',8,'bold'),command=self.fechar_txt)
-        self.btn_fechar_arq.place(relx=0.75,rely=0.5, relwidth=0.17, relheight=0.5)
-        
+        self.btn_fechar_arq.place(relx=0.6,rely=0.5, relwidth=0.17, relheight=0.5)
+        #limpar
+        self.btn_limpar_arq=Button(self.frames, text="Limpar",bd=4,bg="darksalmon",fg="black",font=('verdana',8,'bold'),command=self.limpar_txt)
+        self.btn_limpar_arq.place(relx=0.8,rely=0.5, relwidth=0.17, relheight=0.5)
        
    def caixa_text(self):
        #tela texto
-       self.bloco_text=Text(self.root,bg="papayawhip")
+       self.bloco_text=Text(self.root,bg="papayawhip",fg="black")
        self.bloco_text.place(relx=0.1, rely=0.35,relwidth=0.8, relheight=0.7)
        
 Escrevertxt()
